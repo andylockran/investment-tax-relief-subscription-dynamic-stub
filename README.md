@@ -12,7 +12,7 @@ GET, PUT and POST REST Endpoints to be defined below  (the below is an example o
 
 - `GET /individual/{nino}/enrolment` - gets the enrolemnt for a particular individual with the specified nino
 
- ..etc..
+ ..etc.....
 
 
 
