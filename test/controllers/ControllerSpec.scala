@@ -25,13 +25,14 @@ object TestData {
   val authHeader = "Authorization" -> "Bearer: abcdef12345678901234567890"
   val envHeader = "Environment" -> "IST0"
 
-  val validHeadersExample = Map(authHeader,envHeader)
+  val validHeadersExample = Map(authHeader, envHeader)
   val noAuthHeadersExample = Map(envHeader)
   val noEnvHeadersExample = Map(authHeader)
-  val emptyHeadersExample = Map[String,String]()
+  val emptyHeadersExample = Map[String, String]()
   val invalidRequestJsError = JsError("invalid request body")
-  val validSubscriptionResponse =  SubscriptionResponseTest(false, "nb887766A", "Success Reponse")
+  val validSubscriptionResponse = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002", "123456789012345")
 }
+
 class SubscriptionStubControllerSpec extends UnitSpec {
   "The validation results for a valid testReponse and valid headers should be a success" should {
     "return a valid request object" in {

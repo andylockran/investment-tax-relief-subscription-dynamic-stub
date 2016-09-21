@@ -16,6 +16,7 @@
 
 package controllers
 
+import play.api.Logger
 import uk.gov.hmrc.play.microservice.controller.BaseController
 import play.api.libs.json._
 import model._
@@ -35,16 +36,20 @@ object SubscriptionStubController extends SubscriptionStubController {
 
 trait SubscriptionStubController extends BaseController {
 
-  /**
-    * Get all current protections applicable to the specified Nino
-    *
-    * @param nino identifies the individual to whom the protections apply
-    * @return List of latest versions of each protection
-    **/
-  def testResponse(nino: String): Action[AnyContent] = Action.async{ implicit request =>
-    val result = SubscriptionResponseTest(true, nino, "Service Response Success")
+  def createSubscription: Action[AnyContent] = Action.async{ implicit request =>
+    Logger.info(s"[TAVCSubscriptionController][subscribe]")
+    val jsonRequestData = request.body.asJson.get
+    Logger.info(s"[TAVCSubscriptionController][subscribe] - " +
+      s"Header Environment = ${request.headers.get("Environment")} - jsonRequestData = ${jsonRequestData}")
+    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002", "123456789012345")
     Future.successful(Ok(Json.toJson(result)))
   }
+
+  def getSubscription: Action[AnyContent] = Action.async{ implicit request =>
+    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002", "123456789012345")
+    Future.successful(Ok(Json.toJson(result)))
+  }
+
 }
 
 object ControllerHelper {

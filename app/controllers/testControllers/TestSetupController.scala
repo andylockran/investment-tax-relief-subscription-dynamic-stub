@@ -23,7 +23,7 @@ package controllers.testControllers
 
 import uk.gov.hmrc.play.microservice.controller.BaseController
 //import uk.gov.hmrc.pla.stub.repository.{ProtectionRepository, MongoProtectionRepository}
-import model.SubscriptionResponseTest
+import model.SubscriptionResponse
 import model.Error
 
 import play.api.mvc._

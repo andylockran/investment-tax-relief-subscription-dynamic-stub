@@ -1,4 +1,5 @@
 # microservice specific routes
 
 # individual (nino) routes (made up to test rest url)
-GET     /individual/:nino/enrolment        controllers.SubscriptionStubController.testResponse(nino:String)
+POST     /subscribe      controllers.SubscriptionStubController.createSubscription
+GET      /subscribe      controllers.SubscriptionStubController.getSubscription
