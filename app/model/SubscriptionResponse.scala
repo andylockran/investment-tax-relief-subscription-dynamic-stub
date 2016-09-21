@@ -18,7 +18,7 @@ package model
 
 import play.api.libs.json.Json
 
-case class SubscriptionResponse(processingDate: String, tavcRefNumber: String, formBundleNumber: String)
+case class SubscriptionResponse(processingDate: String, tavcRefNumber: String)
 
 object SubscriptionResponse {
   implicit val formats = Json.format[SubscriptionResponse]

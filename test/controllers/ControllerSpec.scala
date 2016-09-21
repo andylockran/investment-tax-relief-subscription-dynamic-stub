@@ -30,7 +30,7 @@ object TestData {
   val noEnvHeadersExample = Map(authHeader)
   val emptyHeadersExample = Map[String, String]()
   val invalidRequestJsError = JsError("invalid request body")
-  val validSubscriptionResponse = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002", "123456789012345")
+  val validSubscriptionResponse = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002")
 }
 
 class SubscriptionStubControllerSpec extends UnitSpec {

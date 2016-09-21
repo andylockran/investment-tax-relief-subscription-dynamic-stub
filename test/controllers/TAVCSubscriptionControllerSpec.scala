@@ -32,7 +32,7 @@ class TAVCSubscriptionControllerSpec extends PlaySpec with OneServerPerSuite {
         val processingDate = "2001-12-17T09:30:47Z"
         val tavcRefNumber = "XY1200000100002"
         val formBundleNumber = "123456789012345"
-        val successResponse = SubscriptionResponse(processingDate = processingDate, tavcRefNumber = tavcRefNumber, formBundleNumber = formBundleNumber)
+        val successResponse = SubscriptionResponse(processingDate = processingDate, tavcRefNumber = tavcRefNumber)
         status(result) must be(OK)
         contentAsJson(result).as[SubscriptionResponse] must be(successResponse)
       }
@@ -43,7 +43,7 @@ class TAVCSubscriptionControllerSpec extends PlaySpec with OneServerPerSuite {
         val processingDate = "2001-12-17T09:30:47Z"
         val tavcRefNumber = "XY1200000100002"
         val formBundleNumber = "123456789012345"
-        val successResponse = SubscriptionResponse(processingDate = processingDate, tavcRefNumber = tavcRefNumber, formBundleNumber = formBundleNumber)
+        val successResponse = SubscriptionResponse(processingDate = processingDate, tavcRefNumber = tavcRefNumber)
         status(result) must be(OK)
         contentAsJson(result).as[SubscriptionResponse] must be(successResponse)
       }

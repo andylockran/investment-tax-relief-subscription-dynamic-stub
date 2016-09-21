@@ -41,12 +41,12 @@ trait SubscriptionStubController extends BaseController {
     val jsonRequestData = request.body.asJson.get
     Logger.info(s"[TAVCSubscriptionController][subscribe] - " +
       s"Header Environment = ${request.headers.get("Environment")} - jsonRequestData = ${jsonRequestData}")
-    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002", "123456789012345")
+    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002")
     Future.successful(Ok(Json.toJson(result)))
   }
 
   def getSubscription: Action[AnyContent] = Action.async{ implicit request =>
-    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002", "123456789012345")
+    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002")
     Future.successful(Ok(Json.toJson(result)))
   }
 
