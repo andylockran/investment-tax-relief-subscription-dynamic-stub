@@ -1,5 +1,3 @@
 # microservice specific routes
 
-# individual (nino) routes (made up to test rest url)
-POST     /subscribe      controllers.SubscriptionStubController.createSubscription
-GET      /subscribe      controllers.SubscriptionStubController.getSubscription
+POST     /taxpayers/:safeId/subscription      controllers.SubscriptionStubController.createSubscription(safeId: String)

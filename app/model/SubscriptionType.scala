@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package controllers
+package model
 
-import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
+import play.api.libs.json.Json
 
-class TAVCSubscriptionControllerSpec extends PlaySpec with OneServerPerSuite {
+case class SubscriptionType (correspondenceDetails: CorrespondenceDetailsModel)
 
-
-
+object SubscriptionType {
+  implicit val format = Json.format[SubscriptionType]
+  implicit val writes = Json.writes[SubscriptionType]
 }

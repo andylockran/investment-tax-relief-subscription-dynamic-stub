@@ -23,31 +23,50 @@ import model._
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import scala.concurrent.Future
-import scala.util.Random
-
 
 /**
   * The controller for the Investment Tax Relief Subscription service REST API dynamic stub
   *
   **/
 
+
 object SubscriptionStubController extends SubscriptionStubController {
 }
 
 trait SubscriptionStubController extends BaseController {
 
-  def createSubscription: Action[AnyContent] = Action.async{ implicit request =>
+  val response = (message: String) => s"""{"reason" : "$message"}"""
+
+  def createSubscription(safeId: String): Action[JsValue] = Action.async (BodyParsers.parse.json) { implicit request =>
+
     Logger.info(s"[TAVCSubscriptionController][subscribe]")
-    val jsonRequestData = request.body.asJson.get
+    val subscriptionApplicationBodyJs = request.body.validate[SubscriptionRequest]
     Logger.info(s"[TAVCSubscriptionController][subscribe] - " +
-      s"Header Environment = ${request.headers.get("Environment")} - jsonRequestData = ${jsonRequestData}")
-    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002")
-    Future.successful(Ok(Json.toJson(result)))
+            s"Header Environment = ${request.headers.get("Environment")} - jsonRequestData = $subscriptionApplicationBodyJs")
+    subscriptionApplicationBodyJs.fold(
+      errors => Future.successful(BadRequest("""{"reason" : "Invalid JSON message received"}""")),
+      submitRequest => {
+        (safeIdValidationCheck(safeId),submitRequest.acknowledgementReference) match {
+              case (true,"notfound") => Future.successful(NotFound)
+              case (true,"duplicate") => Future.successful(BadRequest(response("Error 400")))
+              case (true,"servererror") => Future.successful(InternalServerError(response("Server error")))
+              case (true,"serviceunavailable") => Future.successful(ServiceUnavailable(response("Service Unavailable")))
+              case (true,"missingregime") => Future.successful(InternalServerError(response("Error 500")))
+              case (true,"sapnumbermissing") => Future.successful(InternalServerError(response("Error 500")))
+              case (true,"notprocessed") => Future.successful(ServiceUnavailable(response("Error 503")))
+              case (true, _) => Future.successful(Created(Json.toJson(SubscriptionResponse("2014-12-17T09:30:47Z", "YAA1234567890"))))
+              case (false,_) => Future.successful(BadRequest(response("Your submission contains one or more errors")))
+        }
+      }
+    )
   }
 
-  def getSubscription: Action[AnyContent] = Action.async{ implicit request =>
-    val result = SubscriptionResponse("2001-12-17T09:30:47Z", "XY1200000100002")
-    Future.successful(Ok(Json.toJson(result)))
+  private def safeIdValidationCheck(safeId: String): Boolean = {
+    val pattern = """^X[A-Z]000[0-9]{10}$""".r
+    safeId match {
+      case pattern() => true
+      case _ => false
+    }
   }
 
 }

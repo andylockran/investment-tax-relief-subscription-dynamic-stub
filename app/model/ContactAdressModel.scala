@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package controllers
+package model
 
-import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
+import play.api.libs.json.Json
 
-class TAVCSubscriptionControllerSpec extends PlaySpec with OneServerPerSuite {
+case class ContactAddressModel (addressLine1 : String, addressLine2: String, addressLine3 : String, addressLine4: String,
+                                countryCode : String, postalCode: String)
 
-
-
+object ContactAddressModel  {
+  implicit val format = Json.format[ContactAddressModel]
+  implicit val writes = Json.writes[ContactAddressModel]
 }
