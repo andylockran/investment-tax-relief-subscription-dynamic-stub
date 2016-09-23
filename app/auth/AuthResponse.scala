@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-package controllers
+package auth
 
-import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
-
-class TAVCSubscriptionControllerSpec extends PlaySpec with OneServerPerSuite {
-
-
-
-}
+sealed trait AuthResponse {}
+case object Authenticated extends AuthResponse
+case class NotAuthenticated(error: String) extends AuthResponse
