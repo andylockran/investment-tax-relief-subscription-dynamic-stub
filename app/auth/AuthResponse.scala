@@ -14,16 +14,8 @@
  * limitations under the License.
  */
 
-package model
+package auth
 
-import play.api.libs.json.Json
-
-case class SubscriptionResponseTest(status: Boolean, nino: String, message: String)
-
-object Implicits {
-  implicit val persistedSubscriptionResponseFormat = Json.format[SubscriptionResponseTest]
-}
-
-object SubscriptionResponseTest {
-  implicit val formats = Json.format[SubscriptionResponseTest]
-}
+sealed trait AuthResponse {}
+case object Authorised extends AuthResponse
+case class NotAuthorised(error: String) extends AuthResponse
