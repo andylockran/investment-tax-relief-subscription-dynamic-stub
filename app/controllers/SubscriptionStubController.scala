@@ -16,13 +16,14 @@
 
 package controllers
 
-import auth.{NotAuthenticated, Authenticated, Authentication}
+import auth.{Authorisation, Authorised, NotAuthorised}
 import play.api.Logger
 import uk.gov.hmrc.play.microservice.controller.BaseController
 import play.api.libs.json._
 import model._
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
+
 import scala.concurrent.Future
 
 /**
@@ -34,19 +35,19 @@ import scala.concurrent.Future
 object SubscriptionStubController extends SubscriptionStubController {
 }
 
-trait SubscriptionStubController extends BaseController with Authentication {
+trait SubscriptionStubController extends BaseController with Authorisation {
 
   val response = (message: String) => s"""{"reason" : "$message"}"""
 
   def createSubscription(safeId: String): Action[JsValue] = Action.async(BodyParsers.parse.json) { implicit request =>
-    authenticated {
-      case Authenticated => {
+    authorised {
+      case Authorised => {
         Logger.info(s"[TAVCSubscriptionController][subscribe]")
         val subscriptionApplicationBodyJs = request.body.validate[SubscriptionRequest]
 
         checkApplicationBody(safeId,subscriptionApplicationBodyJs)
       }
-      case NotAuthenticated(error) => Future.successful(Unauthorized(error))
+      case NotAuthorised(error) => Future.successful(Unauthorized(error))
     }
   }
 
