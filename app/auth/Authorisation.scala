@@ -16,24 +16,25 @@
 
 package auth
 
-import play.api.mvc.Result
-import uk.gov.hmrc.play.http.HeaderCarrier
+import play.api.mvc.{Request, Result}
 
 import scala.concurrent.Future
 
-trait Authentication {
+trait Authorisation {
 
-  def authenticated(f: => AuthResponse => Future[Result])(implicit hc: HeaderCarrier): Future[Result] = {
-    val environment =hc.headers.toMap.get("Environment")
-    val token = hc.headers.toMap.get("Authorization")
+  final val noAuthHeaderError = "required header 'Authorisation' not set in ETMP request"
+  final val noEnvHeaderError = "required header 'Environment' not set in ETMP request"
+  final val combinedError = s"$noAuthHeaderError and $noEnvHeaderError"
+
+  def authorised(f: => AuthResponse => Future[Result])(implicit request: Request[Any]): Future[Result] = {
+    val environment =request.headers.toMap.get("Environment")
+    val token = request.headers.toMap.get("Authorization")
     play.Logger.info(s"""Request headers: environment = ${environment.getOrElse("<NOT SET>")}, authorisation=" + ${token.getOrElse("<NOT SET>")})""")
-    val noAuthHeaderErr = "required header 'Authorisation' not set in ETMP request"
-    val noEnvHeaderErr = "required header 'Environment' not set in ETMP request"
     (environment, token) match {
-      case (Some(_), Some(_)) => f(Authenticated)
-      case (Some(_), None) => f(new NotAuthenticated(noAuthHeaderErr))
-      case (None, Some(_)) => f(new NotAuthenticated(noEnvHeaderErr))
-      case (None, None) => f(new NotAuthenticated(s"$noEnvHeaderErr and $noEnvHeaderErr"))
+      case (Some(_), Some(_)) => f(Authorised)
+      case (Some(_), None) => f(new NotAuthorised(noAuthHeaderError))
+      case (None, Some(_)) => f(new NotAuthorised(noEnvHeaderError))
+      case (None, None) => f(new NotAuthorised(combinedError))
     }
   }
 }

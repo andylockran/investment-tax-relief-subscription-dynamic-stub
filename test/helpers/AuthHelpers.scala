@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
-package auth
+package helpers
 
-sealed trait AuthResponse {}
-case object Authorised extends AuthResponse
-case class NotAuthorised(error: String) extends AuthResponse
+import play.api.test.FakeRequest
+
+object AuthHelpers {
+
+  val authHeader = "Authorization" -> "Bearer: abcdef12345678901234567890"
+  val envHeader = "Environment" -> "IST0"
+  val validRequest = FakeRequest().withHeaders(authHeader,envHeader)
+  val noEnvRequest = FakeRequest().withHeaders(authHeader)
+  val noAuthRequest = FakeRequest().withHeaders(envHeader)
+  val emptyRequest = FakeRequest()
+}
