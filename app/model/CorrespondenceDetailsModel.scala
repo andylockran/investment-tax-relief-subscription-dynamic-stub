@@ -18,7 +18,7 @@ package model
 
 import play.api.libs.json.Json
 
-case class CorrespondenceDetailsModel (contactName: ContactNameModel, contactDetails: Option[ContactDetailsModel],
+case class CorrespondenceDetailsModel (contactName: Option[ContactNameModel], contactDetails: Option[ContactDetailsModel],
                                        contactAddress: Option[ContactAddressModel])
 
 object CorrespondenceDetailsModel {
