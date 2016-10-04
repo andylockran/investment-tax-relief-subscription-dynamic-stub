@@ -17,34 +17,6 @@
 package model
 import play.api.libs.json.Json
 
-//class SubscriptionRequest {
-//  {
-//    "acknowledgementReference": "ABCD123",
-//    "subscriptionType": {
-//      "correspondenceDetails": {
-//      "contactName": {
-//      "name1": "John",
-//      "name2": "Smith"
-//    },
-//      "contactDetails": {
-//      "phoneNumber": "01214567896",
-//      "mobileNumber": "07999056789",
-//      "faxNumber": "01216754321",
-//      "emailAddress": "john.smith@gmail.com"
-//    },
-//      "contactAddress": {
-//      "addressLine1": "38 UpperMarshall Street",
-//      "addressLine2": "Post Box Aptms",
-//      "addressLine3": "Birmingham",
-//      "addressLine4": "WarwickShire",
-//      "countryCode": "GB",
-//      "postalCode": "B1 1LA"
-//    }
-//    }
-//    }
-//  }
-
-
   case class SubscriptionRequest (acknowledgementReference: String, subscriptionType: SubscriptionType)
 
   object SubscriptionRequest {

@@ -23,3 +23,32 @@ The stub attempts to apply the same business rules as the full service.
 ### License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html")
+
+
+/*** Example Json ***/
+class SubscriptionRequest {
+  {
+    "acknowledgementReference": "ABCD123",
+    "subscriptionType": {
+      "correspondenceDetails": {
+      "contactName": {
+      "name1": "John",
+      "name2": "Smith"
+    },
+      "contactDetails": {
+      "phoneNumber": "01214567896",
+      "mobileNumber": "07999056789",
+      "faxNumber": "01216754321",
+      "emailAddress": "john.smith@gmail.com"
+    },
+      "contactAddress": {
+      "addressLine1": "38 UpperMarshall Street",
+      "addressLine2": "Post Box Aptms",
+      "addressLine3": "Birmingham",
+      "addressLine4": "WarwickShire",
+      "countryCode": "GB",
+      "postalCode": "B1 1LA"
+    }
+    }
+    }
+  }

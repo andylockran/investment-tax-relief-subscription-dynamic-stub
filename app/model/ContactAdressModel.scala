@@ -18,8 +18,8 @@ package model
 
 import play.api.libs.json.Json
 
-case class ContactAddressModel (addressLine1 : String, addressLine2: String, addressLine3 : String, addressLine4: String,
-                                countryCode : String, postalCode: String)
+case class ContactAddressModel (addressLine1 : String, addressLine2: String, addressLine3 : Option[String], addressLine4: Option[String],
+                                countryCode : String, postalCode: Option[String])
 
 object ContactAddressModel  {
   implicit val format = Json.format[ContactAddressModel]
